@@ -54,9 +54,8 @@ class Sender(StrEnum):
 
 
 async def setup_state():
-    if "firefox" not in st.session_state:
-        st.session_state.firefox = await asyncio.create_subprocess_exec(
-            "firefox")
+    # Start Firefox immediately
+    st.session_state.firefox = await asyncio.create_subprocess_exec("firefox")
     if "messages" not in st.session_state:
         st.session_state.messages = []
     if "api_key" not in st.session_state:
@@ -103,14 +102,10 @@ async def main():
     if not os.getenv("HIDE_WARNING", False):
         st.warning(WARNING_TEXT)
 
+    # Start browser immediately
+    chat, http_logs = st.tabs(["Chat", "HTTP Exchange Logs"])
+    
     with st.sidebar:
-
-        def _reset_api_provider():
-            if st.session_state.provider_radio != st.session_state.provider:
-                _reset_model()
-                st.session_state.provider = st.session_state.provider_radio
-                st.session_state.auth_validated = False
-
         st.text_input("Model", key="model")
 
         st.number_input(
