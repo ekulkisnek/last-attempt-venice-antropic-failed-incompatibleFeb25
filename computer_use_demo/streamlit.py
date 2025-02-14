@@ -55,8 +55,28 @@ class Sender(StrEnum):
 
 async def setup_state():
     if "firefox" not in st.session_state:
+        # Start Firefox and ensure window is visible
         st.session_state.firefox = await asyncio.create_subprocess_exec(
-            "firefox")
+            "firefox",
+            "--width=800",
+            "--height=600",
+            "--display=:0",
+            env={"DISPLAY": ":0"}
+        )
+        # Wait briefly for Firefox to start
+        await asyncio.sleep(1)
+        # Use xdotool to ensure window is visible and positioned
+        await asyncio.create_subprocess_exec(
+            "xdotool",
+            "search",
+            "--name",
+            "Firefox",
+            "windowactivate",
+            "--sync",
+            "windowmove",
+            "0",
+            "0"
+        )
     if "messages" not in st.session_state:
         st.session_state.messages = []
     if "api_key" not in st.session_state:
