@@ -1,3 +1,8 @@
+![image](https://github.com/user-attachments/assets/8156d44d-5d95-46be-a7e4-e483f98824f2)
+
+
+
+## Old readme
 # Anthropic Computer Use Demo on Replit
 
 ## Getting started
